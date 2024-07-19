@@ -1,4 +1,4 @@
-<img src="assets/SpecsInfo.svg" alt="Si Logo">
+<img src="assets/SpecsInfo.png" alt="Si Logo">
 Specs Info is a simple and good (I think) program to show up the specifications about your system like os you have or ram amount.
 
 ## How to install?
