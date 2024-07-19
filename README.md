@@ -13,8 +13,9 @@ Simple command.
 ```
 node index.js
 ```
-<details>
+
 ## Release 1.0
+<details>
 <summary>SHA-512</summary>
 <br>
 
