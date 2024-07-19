@@ -1,0 +1,16 @@
+{
+  "name": "pcspecs",
+  "version": "1.0",
+  "description": "Simple specs information display.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Artur Flis",
+  "license": "MIT",
+  "dependencies": {
+    "progress": "^2.0.3",
+    "systeminformation": "^5.22.11"
+  }
+}
