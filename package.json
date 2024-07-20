@@ -1,5 +1,5 @@
 {
-  "name": "pcspecs",
+  "name": "specsinfo",
   "version": "1.0",
   "description": "Simple specs information display.",
   "main": "index.js",
