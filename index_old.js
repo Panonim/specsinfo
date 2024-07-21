@@ -12,38 +12,30 @@ const tasks = [
 
 // Loading bar
 async function displaySystemInfo() {
-  const bar = new ProgressBar('Fetching system information :percent [:bar] :elapseds', {
+  const bar = new ProgressBar('Fetching system information  :percent [:bar] :elapseds', {
     complete: '#',
     incomplete: ' ',
     width: 10,
     total: tasks.length
   });
 
-  setImmediate(() => {
-    bar.tick(0); //  progress bar starts at 0%
-  });
-
-  // Handle errors 
+  // Handle error
   const results = {};
-  const promises = tasks.map(({ name, fn }) => {
-    return fn()
-      .then(data => {
-        results[name] = data;
-        bar.tick(); // Update the progress bar
-      })
-      .catch(error => {
-        console.error(`Error fetching ${name} information:`, error);
-        results[name] = null;
-        bar.tick(); // Update the progress bar even if there's an error
-      });
-  });
 
-  await Promise.all(promises); 
+  for (let i = 0; i < tasks.length; i++) {
+    const { name, fn } = tasks[i];
+    try {
+      results[name] = await fn();
+      bar.tick();
+    } catch (error) {
+      console.error(`Error fetching ${name} information:`, error)
+    }
+  }
 
   // Print info
-   console.log('\n===============================');
-   console.log('       PC Specifications       ');
-   console.log('===============================');
+  console.log('\n===============================');
+  console.log('         PC Specifications       ');
+  console.log('===============================');
   const cpu = results.CPU;
   const gpu = results.GPU;
   const memory = results.Memory;
@@ -54,20 +46,16 @@ async function displaySystemInfo() {
   console.log(`Cores: ${cpu.cores}`);
   console.log('-------------------------------');
   console.log('GPU:');
-  if (gpu && gpu.controllers) {
-    gpu.controllers.forEach((controller, index) => {
-      console.log(`  ${index + 1}. ${controller.model} (${controller.vram} MB)`);
-    });
-  }
+  gpu.controllers.forEach((controller, index) => {
+    console.log(`  ${index + 1}. ${controller.model} (${controller.vram} MB)`);
+  });
   console.log('-------------------------------');
   console.log(`RAM: ${(memory.total / (1024 ** 3)).toFixed(2)} GB`);
   console.log('-------------------------------');
   console.log('Storage:');
-  if (storage) {
-    storage.forEach((disk, index) => {
-      console.log(`  ${index + 1}. ${disk.name} ${disk.type} (${(disk.size / (1024 ** 3)).toFixed(2)} GB)`);
-    });
-  }
+  storage.forEach((disk, index) => {
+    console.log(`  ${index + 1}. ${disk.name} ${disk.type} (${(disk.size / (1024 ** 3)).toFixed(2)} GB)`);
+  });
   console.log('-------------------------------');
   console.log(`OS: ${os.distro} ${os.release}`);
 }
