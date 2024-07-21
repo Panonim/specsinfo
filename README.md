@@ -17,7 +17,7 @@ node index.js
 ## Release 2.0
 Improved script speed from:
 ```
-`11.32649 s (11326.49 ms)
+11.32649 s (11326.49 ms)
 to:
 7.59787 s (7597.87 ms)
 ```
