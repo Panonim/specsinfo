@@ -14,14 +14,17 @@ Simple command.
 node index.js
 ```
 
-## Release 2.0
+## Release
+### 2.0
 Improved script speed from:
 ```
 11.32649 s (11326.49 ms)
 to:
 7.59787 s (7597.87 ms)
 ```
+
 This number is based on 100 taken tests
+### 2.1
 <details>
 <summary>SHA-512</summary>
 <br>
