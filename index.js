@@ -19,11 +19,8 @@ async function displaySystemInfo() {
     total: tasks.length
   });
 
-  setImmediate(() => {
-    bar.tick(0); //  progress bar starts at 0%
-  });
+  bar.tick(0); // Start progress bar at 0%
 
-  // Handle errors 
   const results = {};
   const promises = tasks.map(({ name, fn }) => {
     return fn()
@@ -38,38 +35,43 @@ async function displaySystemInfo() {
       });
   });
 
-  await Promise.all(promises); 
+  await Promise.all(promises);
 
-  // Print info
-   console.log('\n===============================');
-   console.log('       PC Specifications       ');
-   console.log('===============================');
-  const cpu = results.CPU;
-  const gpu = results.GPU;
-  const memory = results.Memory;
-  const storage = results.Storage;
-  const os = results.OS;
+  // Construct output
+  const output = [];
+  const { CPU: cpu, GPU: gpu, Memory: memory, Storage: storage, OS: os } = results;
 
-  console.log(`CPU: ${cpu.manufacturer} ${cpu.brand} (${cpu.speed} GHz)`);
-  console.log(`Cores: ${cpu.cores}`);
-  console.log('-------------------------------');
-  console.log('GPU:');
+  output.push('\n===============================');
+  output.push('       PC Specifications       ');
+  output.push('===============================');
+  if (cpu) {
+    output.push(`CPU: ${cpu.manufacturer} ${cpu.brand} (${cpu.speed} GHz)`);
+    output.push(`Cores: ${cpu.cores}`);
+  }
+  output.push('-------------------------------');
+  output.push('GPU:');
   if (gpu && gpu.controllers) {
     gpu.controllers.forEach((controller, index) => {
-      console.log(`  ${index + 1}. ${controller.model} (${controller.vram} MB)`);
+      output.push(`  ${index + 1}. ${controller.model} (${controller.vram} MB)`);
     });
   }
-  console.log('-------------------------------');
-  console.log(`RAM: ${(memory.total / (1024 ** 3)).toFixed(2)} GB`);
-  console.log('-------------------------------');
-  console.log('Storage:');
+  output.push('-------------------------------');
+  if (memory) {
+    output.push(`RAM: ${(memory.total / (1024 ** 3)).toFixed(2)} GB`);
+  }
+  output.push('-------------------------------');
+  output.push('Storage:');
   if (storage) {
     storage.forEach((disk, index) => {
-      console.log(`  ${index + 1}. ${disk.name} ${disk.type} (${(disk.size / (1024 ** 3)).toFixed(2)} GB)`);
+      output.push(`  ${index + 1}. ${disk.name} ${disk.type} (${(disk.size / (1024 ** 3)).toFixed(2)} GB)`);
     });
   }
-  console.log('-------------------------------');
-  console.log(`OS: ${os.distro} ${os.release}`);
+  output.push('-------------------------------');
+  if (os) {
+    output.push(`OS: ${os.distro} ${os.release}`);
+  }
+
+  console.log(output.join('\n'));
 }
 
 displaySystemInfo();
