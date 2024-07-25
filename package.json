@@ -1,6 +1,6 @@
 {
   "name": "specsinfo",
-  "version": "1.0",
+  "version": "2.1",
   "description": "Simple specs information display.",
   "main": "index.js",
   "scripts": {
