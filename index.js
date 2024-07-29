@@ -12,7 +12,7 @@ const tasks = [
 
 // Loading bar
 async function displaySystemInfo() {
-  const bar = new ProgressBar('Fetching system information :percent [:bar] :elapseds', {
+  const bar = new ProgressBar('Fetching system information :percent [:bar]', {
     complete: '#',
     incomplete: ' ',
     width: 10,
