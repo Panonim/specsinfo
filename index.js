@@ -7,7 +7,8 @@ const tasks = [
   { name: 'GPU', fn: si.graphics },
   { name: 'Memory', fn: si.mem },
   { name: 'Storage', fn: si.diskLayout },
-  { name: 'OS', fn: si.osInfo }
+  { name: 'OS', fn: si.osInfo },
+  { name: 'Motherboard', fn: si.baseboard }
 ];
 
 // Loading bar
@@ -39,7 +40,7 @@ async function displaySystemInfo() {
 
   // Construct output
   const output = [];
-  const { CPU: cpu, GPU: gpu, Memory: memory, Storage: storage, OS: os } = results;
+  const { CPU: cpu, GPU: gpu, Memory: memory, Storage: storage, OS: os, Motherboard: motherboard } = results;
 
   output.push('\n===============================');
   output.push('       PC Specifications       ');
@@ -47,6 +48,10 @@ async function displaySystemInfo() {
   if (cpu) {
     output.push(`CPU: ${cpu.manufacturer} ${cpu.brand} (${cpu.speed} GHz)`);
     output.push(`Cores: ${cpu.cores}`);
+  }
+  output.push('-------------------------------');
+  if (motherboard) {
+    output.push(`Motherboard: ${motherboard.manufacturer} ${motherboard.model}`);
   }
   output.push('-------------------------------');
   output.push('GPU:');
